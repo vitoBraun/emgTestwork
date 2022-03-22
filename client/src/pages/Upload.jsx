@@ -9,7 +9,7 @@ export const Upload = () =>{
     const {token} = useContext(AuthContext)
     const [textValue, setTextValue] = useState('');
     // const [textLength, setTextLength] = useState(0);
-
+  
     const [error , setError] = useState(false);
     const [fileAdded, setFileAdded] = useState(false);
     const [buttonDisabled, setButtonDisabled]= useState(true)
@@ -36,7 +36,8 @@ export const Upload = () =>{
             const formData = new FormData();
             formData.append('image', img)
             formData.append('text', textValue)
-            await axios.post('/api/upload', formData,{headers:{'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}`}}).then((res)=>{
+            formData.append('userId', auth.userId)
+            await axios.post('/api/upload', formData, {headers:{'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}`}}).then((res)=>{
               setError(res.data.message)
               if (res.data.success === true){
                 setTextValue('')
@@ -108,7 +109,7 @@ export const Upload = () =>{
                 }}
             ref={inputRef}
           />
-        {/* <Form.Control.Feedback></Form.Control.Feedback> */}
+
         </Form.Group>
   <Button  onClick={handleSubmit} disabled={buttonDisabled} style={{marginTop:'20px'}}>Добавить</Button>
     </Form>
