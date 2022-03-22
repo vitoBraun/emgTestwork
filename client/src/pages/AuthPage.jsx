@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import {useHttp} from '../hooks/http.hook'
 
 import {AuthContext} from '../context/AuthContext';
-import {Form, Button, Container, Card} from 'react-bootstrap'
+import {Form, Button, Container, Card, Alert} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom' 
 
 export const AuthPage = () =>{
@@ -27,7 +27,7 @@ export const AuthPage = () =>{
         try {
             const data = await request('/api/auth/login', 'POST', {...form})
             auth.login(data.token, data.userId)
-
+            clearError()
         } catch (e) {}
             }
 
@@ -73,7 +73,8 @@ export const AuthPage = () =>{
   </Button>
   <Card.Link onClick={registerHandler}>Регистрация</Card.Link>
 </Form>
-   
+
+{error&&<Alert variant="danger" style={{marginTop:'20px'}}>{error}</Alert>}
   </Card.Body>
 </Card>
 
