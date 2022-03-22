@@ -14,7 +14,6 @@ app.use('/api/lastfile', require('./routes/lastfile.routes'))
 app.use('/', express.static(path.join(__dirname, 'client', 'build')))
 app.use('*', express.static(path.join(__dirname, 'client', 'build')))
 
-
 const PORT = config.get("port");
 
 async function start(){

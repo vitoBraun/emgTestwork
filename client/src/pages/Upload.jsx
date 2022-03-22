@@ -8,7 +8,6 @@ export const Upload = () =>{
     const auth = useContext(AuthContext)
     const {token} = useContext(AuthContext)
     const [textValue, setTextValue] = useState('');
-    // const [textLength, setTextLength] = useState(0);
   
     const [error , setError] = useState(false);
     const [fileAdded, setFileAdded] = useState(false);
@@ -63,22 +62,18 @@ export const Upload = () =>{
 
     const onTextChange=(event)=>{
         setError(false)
-        const slicedValue = event.target.value.slice(0,50)
+        const slicedValue = event.target.value.slice(0,50).replace(/[0-9]/, '')
      
         const textLength = event.target.value.length
-        
-        if(!slicedValue.match(/[0-9]/)){
-            setTextValue(slicedValue)
-            if((textLength>=50)){
-              setTextValue(slicedValue)
-              setError('Слишком длинный текст')
-          }
+        setTextValue(slicedValue)
+        if((textLength===50)){
+          setTextValue(slicedValue.slice(0,-1))
+          setError('Слишком длинный текст')
         }
     }
 
     return (<>
     <Container style={{marginTop:'20px'}}>
-  
     <Form onClick={()=>{
       setFileAdded(false)
       setError(false)
@@ -86,15 +81,12 @@ export const Upload = () =>{
     <Form.Group as={Col} controlId="validationCustom01">
           <Form.Label>Введите текст(макс. 50 символов)</Form.Label>
           <Form.Control
-           name="text"
-         
-            // required={formRequire}
-            as='textarea'
-            placeholder="Введите текст"
-            rows={2}
-            onChange={onTextChange}
-            value={textValue}
-            // isInvalid={error}
+          name="text"
+          as='textarea'
+          placeholder="Введите текст"
+          rows={2}
+          onChange={onTextChange}
+          value={textValue}
           />
 
         </Form.Group>
