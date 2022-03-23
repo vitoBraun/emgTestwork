@@ -36,7 +36,7 @@ export const RegisterPage = () =>{
       setInputError('Пароли не совпадают')
     } 
     if (register.password === '' & register.password2 === ''){
-      setInputError('Введите пароль')
+      setInputError('Введите емэйл и пароль')
     }
 
     if (!inputError){
