@@ -120,7 +120,7 @@ export const RegisterPage = () =>{
        >
     Зарегистрироваться
   </Button>
-  <Card.Link onClick={loginHandler}>Вход</Card.Link>
+  <Card.Link style={{cursor: 'pointer'}}  onClick={loginHandler}>Вход</Card.Link>
 </Form>
 {notice&&<Alert variant="info" style={{marginTop:'20px'}}>{notice}</Alert>}
 {error&&<Alert variant="danger" style={{marginTop:'20px'}}>{error}</Alert>}

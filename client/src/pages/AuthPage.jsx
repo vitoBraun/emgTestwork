@@ -68,7 +68,7 @@ export const AuthPage = () =>{
         disabled={loading}>
     Войти
   </Button>
-  <Card.Link onClick={registerHandler}>Регистрация</Card.Link>
+  <Card.Link style={{cursor: 'pointer'}} onClick={registerHandler}>Регистрация</Card.Link>
 </Form>
 
 {error&&<Alert variant="danger" style={{marginTop:'20px'}}>{error}</Alert>}
