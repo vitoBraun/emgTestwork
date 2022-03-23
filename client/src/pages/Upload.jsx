@@ -79,7 +79,7 @@ export const Upload = () =>{
       setError(false)
       }}>
     <Form.Group as={Col} controlId="validationCustom01">
-          <Form.Label>Введите текст(макс. 50 символов)</Form.Label>
+          <Form.Label>Введите текст</Form.Label>
           <Form.Control
           name="text"
           as='textarea'
@@ -92,7 +92,7 @@ export const Upload = () =>{
         </Form.Group>
     
         <Form.Group as={Col} md="6" controlId="validationCustom02">
-          <Form.Label>Выберите фаил(только JPG, PNG или GIF)</Form.Label>
+          <Form.Label>Выберите файл изображения</Form.Label>
           <Form.Control
             type="file"
             placeholder="Файл"
