@@ -25,7 +25,7 @@ export const RegisterPage = () =>{
     checkValidity()
   })
 
-  const checkValidity = ()=>{
+  const checkValidity = () =>{
     setButtonDisabled(true)
     setInputError(null)
     if(!validator.isEmail(register.email)) {
@@ -35,6 +35,9 @@ export const RegisterPage = () =>{
     if(register.password !== register.password2) {
       setInputError('Пароли не совпадают')
     } 
+    if (register.password === '' & register.password2 === ''){
+      setInputError('Введите пароль')
+    }
 
     if (!inputError){
       setButtonDisabled(false)
