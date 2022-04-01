@@ -4,8 +4,10 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   try {
+    // находим последний добавленный файл в БД
     const file = await File.findOne().sort({ created_at: -1 });
 
+    // отправляем json ответ с данными о файле
     res.json({
       link: file.link,
       text: file.text,

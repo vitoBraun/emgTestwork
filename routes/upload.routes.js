@@ -6,28 +6,54 @@ const auth = require("../middleware/auth.middleware");
 const config = require("config");
 
 uploadFile = async (req, res) => {
+  // определяем  разрешенные типы файла
   const allowedTypes = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
+  // определяем максимальный размер файла  в байтах (5 мб)
   const sizeLimit = 5000000;
 
   try {
+    //если файла в запросе нет
     if (!req.files.image) {
-      return res.send({ success: false, message: "нет файла" });
+      //возвращаем ответ с неудачей
+      return res.json({ success: false, message: "нет файла" });
     }
+
+    // извлекаем необходимые параметры из тела запроса
     const file = req.files.image;
     const userId = req.body.userId;
     const text = req.body.text;
+
+    // подготавливаем имя файла и путь сохранения
     const fileName = file.name.replace(/ /g, "-");
     const path = "client/build/images/" + fileName;
+
+    //создаем ссылку на файл, которую будем выдавать по /api/lastfile
     const link =
       config.get("baseUrl") + ":" + config.get("port") + "/images/" + fileName;
 
+    //если файл не подходит под допустимые форматы
     if (!allowedTypes.includes(file.mimetype)) {
-      return res.send({ success: false, message: "Недопустимый формат файла" });
+      //возвращаем ответ с неудачей
+      return res.json({ success: false, message: "Недопустимый формат файла" });
     }
+    //если файл превосходит допустимый размер
     if (file.size > sizeLimit) {
-      return res.send({ success: false, message: "Недопустимый размер файла" });
+      //возвращаем ответ с неудачей
+      return res.json({ success: false, message: "Недопустимый размер файла" });
     }
 
+    //сохраняем файл
+    file.mv(path);
+
+    // записываем текст, ссылку и юзер id в базу
+    const fileDb = new File({
+      text,
+      link,
+      userId,
+    });
+    await fileDb.save();
+
+    // собираем данные о добавленном файле чтобы вернуть их в успешном ответе
     const fileInfo = {
       name: fileName,
       size: file.size,
@@ -36,20 +62,16 @@ uploadFile = async (req, res) => {
       text: text,
       userId: userId,
     };
-    file.mv(path);
 
-    const fileDb = new File({
-      text,
-      link,
-      userId,
-    });
-    await fileDb.save();
-
-    return res.status(201).send({ success: true, fileInfo });
+    //возвращаем ответ с успешным статусомы и данными о добавленном файле
+    return res.status(201).json({ success: true, fileInfo });
   } catch (error) {
-    res.send({ success: false, message: "Ошибка на сервере" });
+    //в случае ошибки
+    res.json({ success: false, message: "Ошибка на сервере" });
   }
 };
+
+//роут для экспреса
 router.post("/", auth, uploadFile);
 
 module.exports = router;

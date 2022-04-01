@@ -6,7 +6,6 @@ import { AuthContext } from "./context/AuthContext";
 import "materialize-css";
 import { NavbarCmp } from "./components/Navbar";
 
-
 function App() {
   const { token, login, logout, userId } = useAuth();
   const isAuthenticated = !!token;

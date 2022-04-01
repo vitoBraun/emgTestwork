@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 const router = Router();
 
-//register user
+// register user
 // /api/auth/register
 router.post(
   "/register",
@@ -44,7 +44,7 @@ router.post(
   }
 );
 
-//login
+// login
 // /api/auth/login
 router.post(
   "/login",
