@@ -1,7 +1,6 @@
 {
     "port": 5003,
     "jwtSecret": "vitoSsecret878",
-    "mongoUri": "mongodb+srv://emg-testwork:qwerty1234@cluster0.jkemj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     "mongoUriMyServer": "mongodb://vito:DaTaBaSePWD8@185.224.132.106/test",
     "baseUrl": "http://localhost"
 }
