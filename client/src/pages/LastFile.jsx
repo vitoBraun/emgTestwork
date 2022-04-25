@@ -24,8 +24,13 @@ export const LastFile = () => {
     <>
       <Container style={{ marginTop: "20px" }}>
         Cсылка на JSON: <a href="/api/lastfile">/api/lastfile</a> <br />
-        <img src={lastFile.link} alt={lastFile.text} />
+        <img
+          style={{ maxWidth: "50%" }}
+          src={lastFile.link}
+          alt={lastFile.text}
+        />
         <br />
+        Текст:{lastFile.text} <br />
         Создан: {lastFile.created_at}
       </Container>
     </>
