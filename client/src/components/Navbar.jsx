@@ -27,6 +27,9 @@ export const NavbarCmp = () => {
               <NavLink className="nav-link" to="/upload">
                 Загрузка файла на сервер
               </NavLink>
+              <NavLink className="nav-link" to="/lastfile">
+                Последний файл
+              </NavLink>
               <NavLink className="nav-link" to="/" onClick={logoutHandler}>
                 Выйти
               </NavLink>
