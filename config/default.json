@@ -1,6 +1,0 @@
-{
-    "port": 5003,
-    "jwtSecret": "vitoSsecret878",
-    "mongoUriMyServer": "mongodb://vito:DaTaBaSePWD8@185.224.132.106/test",
-    "baseUrl": "http://localhost"
-}

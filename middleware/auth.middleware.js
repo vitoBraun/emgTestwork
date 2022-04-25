@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const config = require("config");
 
 module.exports = (req, res, next) => {
   try {
@@ -8,7 +7,7 @@ module.exports = (req, res, next) => {
       res.status(401).json({ message: "нет авторизации" });
     }
 
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (e) {

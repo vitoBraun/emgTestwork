@@ -3,7 +3,11 @@ const File = require("../models/File");
 const router = Router();
 const fs = require("fs");
 const auth = require("../middleware/auth.middleware");
-const config = require("config");
+
+var baseUrl = process.env.BASE_URL_PRODUCTION;
+if (process.env.NODE_ENV === "development") {
+  baseUrl = process.env.BASE_URL_LOCAL;
+}
 
 uploadFile = async (req, res) => {
   // определяем  разрешенные типы файла
@@ -28,8 +32,7 @@ uploadFile = async (req, res) => {
     const path = "client/build/images/" + fileName;
 
     //создаем ссылку на файл, которую будем выдавать по /api/lastfile
-    const link =
-      config.get("baseUrl") + ":" + config.get("port") + "/images/" + fileName;
+    const link = baseUrl + ":" + process.env.PORT + "/images/" + fileName;
 
     //если файл не подходит под допустимые форматы
     if (!allowedTypes.includes(file.mimetype)) {
