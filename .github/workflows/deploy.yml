@@ -18,6 +18,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
+          post: 22
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: cd /home/${{ secrets.REMOTE_USER }}/deploy/mern/ && git checkout . && git pull
