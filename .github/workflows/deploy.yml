@@ -26,4 +26,4 @@ jobs:
       # - run: npm run client:install
       # - run: npm run client:build
       #DEPLOY
-      - run: rsync -e "ssh -i /home/runner/.shh/key -o StrictHostKeyChecking=no" ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/home/vitossvx/deploy/emgtestwork
+      - run: rsync -e "ssh -i /home/runner/.shh/key -o StrictHostKeyChecking=no" --archive --compress --delete . ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/home/vitossvx/deploy/emgtestwork
