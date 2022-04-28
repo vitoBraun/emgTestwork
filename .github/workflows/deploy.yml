@@ -1,33 +1,28 @@
-name: Build and deploy
+name: Deploy
 
 on:
   push:
     branches:
       - main
 jobs:
-  build-and-deploy:
-    name: Build and deploy
+  deploy:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        node-version: [17.x]
     steps:
-      - name: Install SSH Key
-        env:
-          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-          echo "$SSH_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
-          cat >>~/.ssh/config <<END
-            Host host_name
-              HostName $SSH_HOST
-              User $SSH_USER
-              IdentityFile ~/.ssh/staging.key
-              StrictHostKeyChecking no
-          END
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{matrix.node-version}}
+      #SETUP KEY
+      - run: set -eu
+      - run: mkdir "$HOME/.ssh"
+      - run: echo ${{secrets.SSH_PRIVATE_KEY}} > "$HOME/.shh/key"
+      - run: chmod 600 "$HOME/.ssh/key"
+      # BUILD
+      # - run: npm ci 
+      # - run: npm run build
+      #DEPLOY
+      - run: cd dist && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . vitossvx@185.224.132.106:/home/vitossvx/deploy/emgtestwork
 
-      - name: Deploy with rsync
-        run: rsync -avz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/vitossvx/deploy/emgtestwork
