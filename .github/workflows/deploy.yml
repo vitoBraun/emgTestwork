@@ -24,4 +24,5 @@ jobs:
       # - run: npm ci
       # - run: npm run build
       #DEPLOY
-      - run: rsync -e "ssh -i /home/runner/.shh/key -o StrictHostKeyChecking=no" --archive --compress --delete . vitossvx@185.224.132.106:/home/vitossvx/deploy/emgtestwork
+      # - run: rsync -e "ssh -i /home/runner/.shh/key -o StrictHostKeyChecking=no" . ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/home/vitossvx/deploy/emgtestwork
+      - run: ssh ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}
