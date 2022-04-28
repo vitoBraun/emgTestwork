@@ -13,14 +13,14 @@ jobs:
           persist-credentials: false
 
       - name: Deploy to server
-        uses: easingthemes/ssh-deploy@v2
-        env:
-          # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          REMOTE_USER: ${{ secrets.SSH_USER }}
-          # REMOTE_PORT: ${{ secrets.DEV_REMOTE_PORT }}
-          TARGET: /home/${{ secrets.SSH_USER }}/deploy/emgtestwork/
-          EXCLUDE: "/.git/, /.github/, .eslintrc.js, .gitignore, .nvmrc, .prettierrc.yaml, docker-compose.yml, jest.config.js, README.md"
+        # uses: easingthemes/ssh-deploy@v2
+        # env:
+        # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        # REMOTE_HOST: ${{ secrets.SSH_HOST }}
+        # REMOTE_USER: ${{ secrets.SSH_USER }}
+        # REMOTE_PORT: ${{ secrets.DEV_REMOTE_PORT }}
+        # TARGET: /home/${{ secrets.SSH_USER }}/deploy/emgtestwork/
+        # EXCLUDE: "/.git/, /.github/, .eslintrc.js, .gitignore, .nvmrc, .prettierrc.yaml, docker-compose.yml, jest.config.js, README.md"
 
         #SETUP KEY
       - run: set -eu
