@@ -36,7 +36,6 @@ export const AuthPage = () => {
       <Card style={{ width: "20rem" }}>
         <Card.Body>
           <Card.Title>Вход</Card.Title>
-          lkasdkljdsalkjadskjlasdkjl
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
