@@ -13,7 +13,6 @@ jobs:
           persist-credentials: false
 
       #SETUP KEY
-      - name: Setup key
       - run: set -eu
       - run: mkdir "/home/runner/.shh/"
       - run: echo "${{secrets.SSH_PRIVATE_KEY}}" > "/home/runner/.shh/deploy_key"
