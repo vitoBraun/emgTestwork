@@ -12,28 +12,21 @@ jobs:
         with:
           persist-credentials: false
 
-      # - name: Deploy to server
-      # uses: easingthemes/ssh-deploy@v2
-      # env:
-      # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      # REMOTE_HOST: ${{ secrets.SSH_HOST }}
-      # REMOTE_USER: ${{ secrets.SSH_USER }}
-      # REMOTE_PORT: ${{ secrets.DEV_REMOTE_PORT }}
-      # TARGET: /home/${{ secrets.SSH_USER }}/deploy/emgtestwork/
-      # EXCLUDE: "/.git/, /.github/, .eslintrc.js, .gitignore, .nvmrc, .prettierrc.yaml, docker-compose.yml, jest.config.js, README.md"
-
       #SETUP KEY
+      - name: Setup key
       - run: set -eu
       - run: mkdir "/home/runner/.shh/"
       - run: echo "${{secrets.SSH_PRIVATE_KEY}}" > "/home/runner/.shh/deploy_key"
       - run: chmod 600 "/home/runner/.shh/deploy_key"
 
-      - name: Prepare
+      #Deploy and install
+      - name: Deploy and install
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          # port: ${{ secrets.DEV_REMOTE_PORT }}
+          # if ssh port differs of usual 22
+          # port: ${{ secrets.SSH_PORT  }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/${{ secrets.SSH_USER }}/deploy/emgtestwork && npm i && pm2 startOrRestart emgtestwork
+            cd /home/${{ secrets.SSH_USER }}/deploy/emgtestwork && npm i && npm client:install && npm client:build && pm2 startOrRestart emgtestwork
