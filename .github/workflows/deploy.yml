@@ -28,4 +28,4 @@ jobs:
           # port: ${{ secrets.SSH_PORT  }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/${{ secrets.SSH_USER }}/deploy/emgtestwork && npm i && npm client:install && npm client:build && pm2 restart emgtestwork
+            cd /home/${{ secrets.SSH_USER }}/deploy/emgtestwork && npm i && npm run client:install && npm run client:build && pm2 restart emgtestwork
