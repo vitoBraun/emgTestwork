@@ -18,11 +18,10 @@ jobs:
       #SETUP KEY
       - run: set -eu
       - run: mkdir "$HOME/.ssh"
-      - run: echo ${{secrets.SSH_PRIVATE_KEY}} > "$HOME/.shh/key"
+      - run: echo "${{secrets.SSH_PRIVATE_KEY}}" > "$HOME/.shh/key"
       - run: chmod 600 "$HOME/.ssh/key"
       # BUILD
-      # - run: npm ci 
+      # - run: npm ci
       # - run: npm run build
       #DEPLOY
       - run: cd dist && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . vitossvx@185.224.132.106:/home/vitossvx/deploy/emgtestwork
-
