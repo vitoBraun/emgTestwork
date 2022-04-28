@@ -36,4 +36,4 @@ jobs:
           # port: ${{ secrets.DEV_REMOTE_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/${{ secrets.SSH_USER }}/deploy/emgtestwork && npm i && pm2 startOrRestart emgtestwork
+            cd /home/${{ secrets.SSH_USER }}/deploy/emgtestwork && npm i
