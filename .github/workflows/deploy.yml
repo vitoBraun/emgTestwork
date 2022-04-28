@@ -1,29 +1,33 @@
-name: Deploy
-
 on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
+    name: Deploy Dev
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [17.x]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
         with:
-          node-version: ${{matrix.node-version}}
-      #SETUP KEY
-      - run: set -eu
-      - run: mkdir "/home/runner/.shh/"
-      - run: echo "${{secrets.SSH_PRIVATE_KEY}}" > "/home/runner/.shh/key"
-      - run: chmod 600 "/home/runner/.shh/key"
+          persist-credentials: false
 
-      # BUILD
-      - run: npm install
-      - run: npm run client:install
-      - run: npm run client:build
-      #DEPLOY
-      - run: rsync -e "ssh -i /home/runner/.shh/key -o StrictHostKeyChecking=no" --archive --compress --delete . ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/home/vitossvx/deploy/emgtestwork
+      - name: Deploy to server
+        uses: easingthemes/ssh-deploy@v2
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          # REMOTE_PORT: ${{ secrets.DEV_REMOTE_PORT }}
+          TARGET: /home/${{ secrets.SSH_USER }}/deploy/emgtestwork/
+          EXCLUDE: "/.git/, /.github/, .eslintrc.js, .gitignore, .nvmrc, .prettierrc.yaml, docker-compose.yml, jest.config.js, README.md"
+
+      - name: Prepare
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          # port: ${{ secrets.DEV_REMOTE_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/${{ secrets.SSH_USER }}/deploy/emgtestwork && npm i && pm2 startOrRestart emgtestwork
