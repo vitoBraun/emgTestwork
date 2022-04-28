@@ -7,14 +7,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [17.x]
+    # strategy:
+    #   matrix:
+    #     node-version: [17.x]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{matrix.node-version}}
+      # - uses: actions/setup-node@v1
+      #   with:
+      #     node-version: ${{matrix.node-version}}
       #SETUP KEY
       - run: set -eu
       - run: mkdir "$HOME/.ssh"
