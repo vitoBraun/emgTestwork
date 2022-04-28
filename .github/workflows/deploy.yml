@@ -17,11 +17,11 @@ jobs:
       #     node-version: ${{matrix.node-version}}
       #SETUP KEY
       - run: set -eu
-      - run: mkdir "$HOME/.ssh"
-      - run: echo "${{secrets.SSH_PRIVATE_KEY}}" > "$HOME/.shh/key"
-      - run: chmod 600 "$HOME/.ssh/key"
+      - run: mkdir "/home/runner/.shh/"
+      - run: echo "${{secrets.SSH_PRIVATE_KEY}}" > "/home/runner/.shh/key"
+      - run: chmod 600 "/home/runner/.shh/key"
       # BUILD
       # - run: npm ci
       # - run: npm run build
       #DEPLOY
-      - run: cd dist && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . vitossvx@185.224.132.106:/home/vitossvx/deploy/emgtestwork
+      - run: cd dist && rsync -e "ssh -i /home/runner/.shh/key -o StrictHostKeyChecking=no" --archive --compress --delete . vitossvx@185.224.132.106:/home/vitossvx/deploy/emgtestwork
