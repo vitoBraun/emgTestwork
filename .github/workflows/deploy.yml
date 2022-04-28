@@ -12,8 +12,6 @@ jobs:
     #     node-version: [17.x]
     steps:
       - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
       # - uses: actions/setup-node@v1
       #   with:
       #     node-version: ${{matrix.node-version}}
@@ -23,17 +21,9 @@ jobs:
       - run: echo "${{secrets.SSH_PRIVATE_KEY}}" > "/home/runner/.shh/key"
       - run: chmod 600 "/home/runner/.shh/key"
 
-      - name: Deploy to Server
-        uses: easingthemes/ssh-deploy@v2.1.5
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SOURCE: "build/"
-          REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          REMOTE_USER: ${{ secrets.SSH_USER }}
-          # REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
       # BUILD
       # - run: npm install
       # - run: npm run client:install
       # - run: npm run client:build
       #DEPLOY
-      # - run: rsync -e "ssh -i /home/runner/.shh/key -o StrictHostKeyChecking=no" . ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/home/vitossvx/deploy/emgtestwork
+      - run: cd /home/runner/work/emgTestwork/emgTestwork/build/ rsync -e "ssh -i /home/runner/.shh/key -o StrictHostKeyChecking=no" . ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/home/vitossvx/deploy/emgtestwork
