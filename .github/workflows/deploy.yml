@@ -21,8 +21,8 @@ jobs:
       - run: echo "${{secrets.SSH_PRIVATE_KEY}}" > "/home/runner/.shh/key"
       - run: chmod 600 "/home/runner/.shh/key"
       # BUILD
-      - run: npm install
-      - run: npm run client:install
-      - run: npm run client:build
+      # - run: npm install
+      # - run: npm run client:install
+      # - run: npm run client:build
       #DEPLOY
-      - run: cd dist && rsync -e "ssh -i /home/runner/.shh/key -o StrictHostKeyChecking=no" . ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/home/vitossvx/deploy/emgtestwork
+      - run: rsync -e "ssh -i /home/runner/.shh/key -o StrictHostKeyChecking=no" . ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/home/vitossvx/deploy/emgtestwork
